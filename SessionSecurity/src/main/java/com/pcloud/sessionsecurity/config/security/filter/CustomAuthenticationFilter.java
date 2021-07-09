@@ -10,6 +10,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * UsernamePasswordAuthenticationFilter 를 직접 상속받아서 구현하는 방법과 AbstractAuthenticationProcessingFilter 를 상속받는 방법이 있습니다.
+ * UsernamePasswordAuthentication Token 을 발급할 클래스.
+ */
 @Slf4j
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
