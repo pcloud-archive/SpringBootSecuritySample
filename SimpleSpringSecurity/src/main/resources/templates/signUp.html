@@ -3,18 +3,21 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     </head>
-
     <body width="100%" height="100%">
-        <form action="/login-process" method="post" class="loginForm">
+        <form action="/user/signup" method="post" class="signUpForm">
             <h2>Login</h2>
             <div class="emailForm">
                 <input type="text" name="email" placeholder="EMAIL">
             </div>
+            <div class="nameForm">
+                <input type="text" name="name" placeholder="NAME">
+            </div>
             <div class="passwordForm">
                 <input type="password" name="password" placeholder="PW">
             </div>
-            <button type="submit" class="btn" value="LOG IN"/>
-            <a href="/user/signup">sign up</a>
+            <button type="submit" class="btn">
+                SIGN UP
+            </button>
         </form>
     </body>
 </html>
