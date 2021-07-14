@@ -11,7 +11,7 @@ public class MemoryUserRepository implements UserRepository {
     private Map<Long, User> users = new HashMap();
 
     public MemoryUserRepository() {
-        User build = User.builder().id(0L).name("PCloud").email("pcloud63514@gmail.com").password("qwenm1823").role("USER").build();
+        User build = User.builder().id(0L).name("PCloud").email("pcloud63514@gmail.com").password("qwenm1823").role("ROLE_USER").build();
         users.put(0L, build);
     }
 
