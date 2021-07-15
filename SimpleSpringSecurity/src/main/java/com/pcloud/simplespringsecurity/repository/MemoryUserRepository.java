@@ -16,6 +16,14 @@ public class MemoryUserRepository implements UserRepository {
     }
 
     @Override
+    public User findByEmailEndPassword(String email, String password) {
+        return users.values()
+                .stream().filter(u->u.getEmail().equals(email) && u.getPassword().equals(password))
+                .findFirst()
+                .orElse(User.builder().build());
+    }
+
+    @Override
     public User findByEmail(String email) {
         return users.values()
                 .stream()

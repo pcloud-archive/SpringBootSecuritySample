@@ -17,5 +17,15 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         log.info("실패");
+
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+
+        request.setAttribute("error", "로그인 실패");
+        request.setAttribute("exception", "로긴 실패~");
+
+        request.getRequestDispatcher("/login?error=true").forward(request, response);
     }
+
+
 }

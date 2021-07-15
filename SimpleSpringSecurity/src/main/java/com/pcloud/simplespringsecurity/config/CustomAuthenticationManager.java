@@ -19,7 +19,7 @@ public class CustomAuthenticationManager implements AuthenticationManager {
     private final UserService userService;
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        UserDetails userDetails = userService.loadUserByUsername((String) authentication.getPrincipal());
+        UserDetails userDetails = userService.login(authentication);
         log.info("authenticate");
 
         if(userDetails.getUsername() == null) {
