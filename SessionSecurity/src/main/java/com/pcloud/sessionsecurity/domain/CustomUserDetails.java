@@ -1,6 +1,5 @@
-package com.pcloud.sessionsecurity.domain.oauth;
+package com.pcloud.sessionsecurity.domain;
 
-import lombok.Builder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,12 +7,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Arrays;
 import java.util.Collection;
 
-@Builder
-public class User implements UserDetails {
+public class CustomUserDetails implements UserDetails {
     private String email;
-    private String name;
-    private String role;
     private String password;
+    private String role;
+
+    public CustomUserDetails(User user) {
+        email = user.getEmail();
+        password = user.getPassword();
+        role = user.getRole();
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Arrays.asList(new SimpleGrantedAuthority(role));
@@ -26,7 +30,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return email;
     }
 
     @Override

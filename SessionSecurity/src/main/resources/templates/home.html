@@ -1,14 +1,16 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
 <body>
-<div class="container">
-    <div>
-        <h1>Hello Spring</h1>
-        <p>Home</p>
-        <p>
-            <a href="/members">로그인</a>
-        </p>
-    </div>
-</div> <!-- /container -->
+<div>
+    <h1>Home Page</h1>
+    <p>
+        <a class="btn btn-lg btn-secondary" href="/test/user">유저 페이지</a>
+        <a class="btn btn-lg btn-secondary" href="/test/admin">어드민 페이지</a>
+    </p>
+</div>
 </body>
 </html>
