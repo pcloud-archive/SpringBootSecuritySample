@@ -45,6 +45,14 @@ public class ApiController {
             throw new Exception("");
         }
 
+        // service는 id와 password 검사.
+        // 흠 service는 결국 비즈니스 로직의 핵심이다.
+        // repository 처럼 낮은 단계의 책임만 갖고 있는게 아닌
+        // 보다 구체적인 책임을 지녀야한다.
+        // 가령 로그인은 id, password 검사를 하고 일치하면 accessToken과 refreshToken을 생성하고 사용자에게 발급해야한다.
+        // 저걸 나눈다??
+        // 흠 access, refresh 토큰을 발급하는게 login Api의 목적.
+
         String token = jwtTokenProvider.createToken(user.getEmail(), Arrays.asList(user.getRole()));
 
         return new UserTokenDto(user.getEmail(), token);
