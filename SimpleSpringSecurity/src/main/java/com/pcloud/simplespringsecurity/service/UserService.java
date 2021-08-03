@@ -3,9 +3,7 @@ package com.pcloud.simplespringsecurity.service;
 import com.pcloud.simplespringsecurity.domain.CustomUserDetails;
 import com.pcloud.simplespringsecurity.domain.User;
 import com.pcloud.simplespringsecurity.repository.MemoryUserRepository;
-import com.pcloud.simplespringsecurity.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,7 +24,7 @@ public class UserService implements UserDetailsService {
     public UserDetails login(Authentication authentication) throws UsernameNotFoundException {
         String email = (String)authentication.getPrincipal();
         String password = (String)authentication.getCredentials();
-        User user = userRepository.findByEmailEndPassword(email, password);
+        User user = userRepository.findByEmailAndPassword(email, password);
         return new CustomUserDetails(user);
     }
 }
