@@ -31,13 +31,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable() // http 인증 기반의 로그인창을 비활성화한다.
             .csrf()        // csrf는 맨 아래 설명.
                 .disable() // csrf 설정을 비활성화한다.
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .sessionManagement() // 세션 정책을 설정한다. (생성 정책에 가깝다)        SS(Security Session)
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)     // SS가 세션을 생성하지 않고, 기존 생성된 세션도 사용하지 않는다.
+//                .sessionCreationPolicy(SessionCreationPolicy.NEVER)       // SS가 세션을 생성하지 않고, 기존 생성된 세션은 사용한다.
+//                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // 기본 값. SS 가 세션이 필요할 때 SS가 직접 생성.
+//                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)      // 항상 세션을 허용
             .and()
-            .authorizeRequests()
-            .antMatchers("/employee/join").permitAll()
-            .antMatchers("/employee/**").authenticated()
+            .authorizeRequests() // 요청에 대한 인증처리를 설정한다.
+            .antMatchers("/employee/join") // 처리하고자 하는 요청 경로를 작성한다.
+                .permitAll()                         // 무조건 접근을 허용한다.
+            .antMatchers("/employee/**")
+                .authenticated()                     // 인증된 사용자만 접근을 허용한다.
 //                .antMatchers("/foo/**").permitAll()
-            .anyRequest().permitAll();
+            .anyRequest()  // 설정되지 않은 모든 요청에 대해 설정한다.
+                .permitAll();
     }
 
     /** csrf (Cross-site request forgery)   CSRF, XSRF 라 표현한다.
