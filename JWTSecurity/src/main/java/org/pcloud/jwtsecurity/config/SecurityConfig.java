@@ -1,13 +1,19 @@
 package org.pcloud.jwtsecurity.config;
 
+import lombok.RequiredArgsConstructor;
+import org.pcloud.jwtsecurity.config.filter.JwtAuthenticationFilter;
+import org.pcloud.jwtsecurity.jwt.JwtTokenProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+@RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private final JwtTokenProvider jwtTokenProvider;
     /**
      * 서버의 자원(resources)에 대해 접근을 설정.
      */
@@ -58,7 +64,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //              .antMatchers("/foo/**").permitAll()
 
             .anyRequest()  // 설정되지 않은 모든 요청에 대해 설정한다.
-                .permitAll();
+                .permitAll()
+            .and()
+            .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
     }
 
     /** csrf (Cross-site request forgery)   CSRF, XSRF 라 표현한다.
