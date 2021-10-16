@@ -29,20 +29,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.
             httpBasic()    // http 인증 기반의 로그인창(id, password)창을 설정한다. (기본적으로 제공된다.)
                 .disable() // http 인증 기반의 로그인창을 비활성화한다.
+
             .csrf()        // csrf는 맨 아래 설명.
                 .disable() // csrf 설정을 비활성화한다.
-            .sessionManagement() // 세션 정책을 설정한다. (생성 정책에 가깝다)        SS(Security Session)
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)     // SS가 세션을 생성하지 않고, 기존 생성된 세션도 사용하지 않는다.
-//                .sessionCreationPolicy(SessionCreationPolicy.NEVER)       // SS가 세션을 생성하지 않고, 기존 생성된 세션은 사용한다.
-//                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // 기본 값. SS 가 세션이 필요할 때 SS가 직접 생성.
-//                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)      // 항상 세션을 허용
+
+            .sessionManagement() // 세션 정책을 설정한다. (생성 정책에 가깝다)      SS(Security Session)
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)   // SS가 세션을 생성하지 않고, 기존 생성된 세션도 사용하지 않는다.
+//              .sessionCreationPolicy(SessionCreationPolicy.NEVER)       // SS가 세션을 생성하지 않고, 기존 생성된 세션은 사용한다.
+//              .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // 기본 값. SS 가 세션이 필요할 때 SS가 직접 생성.
+//              .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)      // 항상 세션을 허용
             .and()
             .authorizeRequests() // 요청에 대한 인증처리를 설정한다.
-            .antMatchers("/employee/join") // 처리하고자 하는 요청 경로를 작성한다.
-                .permitAll()                         // 무조건 접근을 허용한다.
-            .antMatchers("/employee/**")
-                .authenticated()                     // 인증된 사용자만 접근을 허용한다.
-//                .antMatchers("/foo/**").permitAll()
+            .antMatchers("/foo/hello", "/bar/hello", "/popo/hello") // 처리하고자 하는 요청 경로를 작성한다.
+                .permitAll()                                                  // 무조건 접근을 허용한다.
+
+            .antMatchers("/foo/bye") // 처리하고자 하는 요청 경로를 작성한다.
+                .hasRole("FOO")                // 역할이 일치하면 접근을 허용 (권한이랑 비슷하고, ROLE_ 패턴이 생략된 형태.)
+
+            .antMatchers("/bar/bye")
+                .hasRole("BAR")                // 역할은 jwt토큰에 저장하거나, db에 사용자 정보를 저장할 때 함께 저장하는 방법을 사용한다.
+
+            .antMatchers("/popo/**")
+              .authenticated()                       // 인증된 사용자만 접근을 허용한다. 단 상단(43줄)에서 먼저 허용된 /bar/hello 는 접근이 가능하다.
+//              .denyAll()                           // 무조건 접근을 허용하지 않는다.
+//              .hasAuthority("ROLE_ADMIN")          // 권한이 일치하면 접근을 허용
+//              .hasRole("ADMIN")                    // 역할이 일치하면 접근을 허용 (권한이랑 비슷하고, ROLE_ 패턴이 생략된 형태.)
+//              .hasAnyRole("ADMIN", "SUPER_ADMIN")  // 역할목록 중 일치하는 것이 있다면 접근을 허용
+//              .antMatchers("/foo/**").permitAll()
+
             .anyRequest()  // 설정되지 않은 모든 요청에 대해 설정한다.
                 .permitAll();
     }
