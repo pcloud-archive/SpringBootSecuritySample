@@ -20,9 +20,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web
-            .ignoring() // 특정 접근 요청을 실패로 처리한다.
+            .ignoring() // 리소스 접근을 필터에서 제외한다.
             .antMatchers("/v2/api-docs", "/swagger-resources/**",
-                "/swagger-ui.html", "/webjars/**", "/swagger/**"); // 실패처리 하고자 하는 접근 경로 ex) /swagger-ul.html
+                "/swagger-ui.html", "/webjars/**", "/swagger/**"); // 필터 처리를 무시하고자 하는 경로 ex) /swagger-ul.html
     }
 
     /**
