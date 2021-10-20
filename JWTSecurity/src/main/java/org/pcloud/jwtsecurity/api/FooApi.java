@@ -28,7 +28,7 @@ public class FooApi {
     public String helloFoo(HttpServletResponse response) {
         log.info("foo hello");
         // 토큰을 생성한다. 권한은 ROLE_FOO 이다.
-        String jwtToken = jwtTokenProvider.createJwtToken("jwtTest", Arrays.asList("ROLE_FOO"));
+        String jwtToken = jwtTokenProvider.createJwtToken("Foo", Arrays.asList("ROLE_FOO"));
         response.addHeader("token", jwtToken);
         return "hello Foo!!";
     }

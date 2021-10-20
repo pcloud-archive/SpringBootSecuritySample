@@ -30,9 +30,13 @@ public class LoggerAspect {
             Object result = proceedingJoinPoint.proceed();
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest(); // request 정보를 가져온다.
 
+            Object caller = request.getAttribute("caller");
+
+
+
             String apiName = proceedingJoinPoint.getSignature().getDeclaringType().getSimpleName();
             String methodName = proceedingJoinPoint.getSignature().getName();
-
+            log.info("caller: {}  api: {}  method: {}", caller, apiName, methodName);
             Map<String, Object> params = new HashMap<>();
 
             try {

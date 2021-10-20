@@ -61,8 +61,12 @@ public class JwtTokenProvider {
      * @return true - 유효 / false - 유효하지 않음
      */
     public boolean validateToken(String token) {
-        Jws<Claims> claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
-        return !claims.getBody().getExpiration().before(new Date());
+        try {
+            Jws<Claims> claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
+            return !claims.getBody().getExpiration().before(new Date());
+        } catch(Exception e) {
+            return false;
+        }
     }
 
     public Authentication getAuthentication(String token) {

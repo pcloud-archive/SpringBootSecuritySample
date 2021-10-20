@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtTokenProvider jwtTokenProvider;
     /**
-     * 서버의 자원(resources)에 대해 접근을 설정.
+     * Filter 인증을 제외할 주소를 작성하는 함수.
      */
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -63,8 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //              .hasAnyRole("ADMIN", "SUPER_ADMIN")  // 역할목록 중 일치하는 것이 있다면 접근을 허용
 //              .antMatchers("/foo/**").permitAll()
 
-            .anyRequest()  // 설정되지 않은 모든 요청에 대해 설정한다.
-                .permitAll()
+//            .anyRequest()  // 설정되지 않은 모든 요청에 대해 설정한다.
+//                .permitAll()
             .and()
             .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
     }

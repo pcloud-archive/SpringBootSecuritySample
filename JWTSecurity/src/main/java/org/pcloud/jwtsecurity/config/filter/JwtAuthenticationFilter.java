@@ -33,6 +33,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if(token != null && !token.isEmpty() && jwtTokenProvider.validateToken(token)) {
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
+            request.setAttribute("caller", authentication.getName());
             SecurityContextHolder
                     .getContext()
                     .setAuthentication(authentication);
